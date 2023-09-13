@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -101,9 +101,17 @@ namespace Infrastructure.Repository
                 foreach (var property in GetProperties(true))
                 {
                     var columnAttr = property.GetCustomAttribute<ColumnAttribute>();
+                    if(columnAttr != null )
+                    {
 
+                    }
                     string propertyName = property.Name;
-                    string columnName = columnAttr.Name;
+                    string columnName = propertyName;
+                    if (columnAttr != null)
+                    {
+                        columnName = columnAttr.Name;
+                    }
+                    
 
                     query.Append($"{columnName} = @{propertyName},");
                 }
