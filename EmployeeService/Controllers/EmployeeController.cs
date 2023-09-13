@@ -12,13 +12,16 @@ namespace EmployeeService.Controllers
     public class EmployeeController : ControllerBase
     {
         private EmployeeRepository _employeeRepository;
-        public EmployeeController(EmployeeRepository employeeRepository)
+        private ILogger<Employee> _logger;
+        public EmployeeController(EmployeeRepository employeeRepository, ILogger<Employee> logger)
         {
             _employeeRepository = employeeRepository;
+            _logger = logger;
         }
         [HttpGet]
         public IEnumerable<Employee> Get()
         {
+            _logger.Log(LogLevel.Information, "Api Get Called");
             return _employeeRepository.GetAll();
         }
 
@@ -26,6 +29,7 @@ namespace EmployeeService.Controllers
         [HttpGet("{id}")]
         public Employee Get(int id)
         {
+            _logger.Log(LogLevel.Information, "Api Get By Id Called");
             return _employeeRepository.GetById(id);
         }
 
@@ -33,6 +37,7 @@ namespace EmployeeService.Controllers
         [HttpPost]
         public bool Post([FromBody] Employee value)
         {
+            _logger.Log(LogLevel.Information, "Api Post Employee Called");
             return _employeeRepository.Add(value);
         }
 
@@ -40,6 +45,7 @@ namespace EmployeeService.Controllers
         [HttpPut("{id}")]
         public bool Put(int id, [FromBody] Employee value)
         {
+            _logger.Log(LogLevel.Information, "Api Put Employee Called");
             return _employeeRepository.Update(value);
         }
 
@@ -47,6 +53,7 @@ namespace EmployeeService.Controllers
         [HttpDelete("{id}")]
         public bool Delete([FromBody] Employee value)
         {
+            _logger.Log(LogLevel.Information, "Api Delete Employee Called");
             return _employeeRepository.Delete(value);
         }
     }
